@@ -1,14 +1,18 @@
-import supabase from "@/lib/supabase";
+import { getManifestos } from "@/lib/fetchManifestos";
 
-export default async function ManifestoDetail({ params }: { params: { id: string } }) {
-  const { data, error } = await supabase.from("manifesto").select("*").eq("id", params.id).single();
-  if (error) return <p>Error loading manifesto</p>;
+export default async function ManifestoPage() {
+  const manifestos = await getManifestos();
 
   return (
     <div className="container">
-      <h1>{data.title}</h1>
-      <p>{data.content}</p>
+      <h1>Manifestos</h1>
+      <ul>
+        {manifestos.map((m) => (
+          <li key={m.id}>
+            <a href={`/manifesto/${m.id}`}>{m.title}</a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
