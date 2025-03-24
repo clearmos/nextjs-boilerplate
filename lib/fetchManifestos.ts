@@ -1,9 +1,9 @@
 // lib/fetchManifestos.ts
-import { createClient } from '@/lib/supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 import { Manifesto } from '@/types/manifesto'
 
 export async function fetchManifestos(): Promise<Manifesto[]> {
-  const supabase = createClient()
+  const supabase = getSupabaseClient()
   const { data, error } = await supabase
     .from('manifesto')
     .select('*')
