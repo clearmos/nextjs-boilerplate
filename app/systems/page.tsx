@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { System } from '@/types/system';
 import SystemCard from '@/components/SystemCard';
 
