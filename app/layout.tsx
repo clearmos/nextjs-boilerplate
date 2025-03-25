@@ -1,8 +1,19 @@
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import "./globals.css";
+// app/layout.tsx
+import './globals.css'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import type { Metadata } from 'next'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: 'Autologoi',
+  description: 'Digital Prophecy Rooted in Timeless Wisdom',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body>
@@ -11,5 +22,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Footer />
       </body>
     </html>
-  );
+  )
 }
