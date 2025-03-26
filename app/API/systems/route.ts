@@ -1,21 +1,25 @@
 // app/api/systems/route.ts
-import { NextRequest, NextResponse } from 'next/server'
-import { getSupabaseClient } from '@/lib/supabase'
+import { fetchSystems } from '@/lib/fetchSystems';
+import { System } from '@/types/system';
+import SystemCard from '@/components/SystemCard';
+import NewSystemForm from '@/components/NewSystemForm';
 
-export async function POST(req: NextRequest) {
-  const body = await req.json()
-  console.log('Received request body:', body);
-  
-  const supabase = getSupabaseClient()
+export default async function SystemsPage() {
+  const systems: System[] = await fetchSystems();
 
-  const { data, error } = await supabase
-    .from('systems')
-    .insert([{ name: body.name, description: body.description }])
+  return (
+    <main className="p-4">
+      <h1 className="text-2xl font-bold mb-4">🧠 Systems</h1>
 
-  if (error) {
-    console.error('Error inserting system:', error)
-    return NextResponse.json({ error: 'Failed to create system' }, { status: 500 })
-  }
+      <NewSystemForm />
 
-  return NextResponse.json({ data }, { status: 200 })
+      {systems.length === 0 ? (
+        <p>No systems found. The architecture awaits.</p>
+      ) : (
+        systems.map((system) => (
+          <SystemCard key={system.id} system={system} />
+        ))
+      )}
+    </main>
+  );
 }
